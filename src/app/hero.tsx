@@ -1,4 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
+
 
 import { Typography } from "@material-tailwind/react";
 import { motion } from "framer-motion";
