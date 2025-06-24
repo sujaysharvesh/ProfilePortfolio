@@ -63,7 +63,7 @@ const cardVariants = {
     y: 0,
     scale: 1,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 300,
       damping: 24,
       duration: 0.6,
@@ -81,7 +81,7 @@ const iconVariants = {
     scale: 1,
     rotate: 0,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 400,
       damping: 20,
       delay: 0.2,
@@ -113,7 +113,7 @@ function SkillCard({ icon: Icon, title, children, index }: SkillCardProps) {
         scale: 1.05,
         y: -10,
         transition: { 
-          type: "spring", 
+          type: "spring" as const,
           stiffness: 400, 
           damping: 25 
         }
