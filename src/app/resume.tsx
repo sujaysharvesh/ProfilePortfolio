@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useState } from "react";
@@ -26,28 +27,30 @@ const experienceData = [
   {
     title: "Backend Developer",
     institution: "Contract",
-    date: "Jun 2025 - Fab 2025",
-  }
+    date: "Jun 2025 - Feb 2025",
+  },
 ];
 
 export default function Qualifications() {
-  const [tab, setTab] = useState<"education" | "experience">("education");
-
-  const data = tab === "education" ? educationData : experienceData;
+  const [tab, setTab] = useState<"experience" | "education">("experience");
+  const data = tab === "experience" ? experienceData : educationData;
 
   return (
     <section id="qualification" className="bg-gray-100 py-28 px-6">
       <div className="font-sora max-w-6xl mx-auto">
-        <Typography variant="h2" className="font-sora text-center text-4xl md:text-5xl font-bold mb-14">
+        <Typography
+          variant="h2"
+          className="text-center text-4xl md:text-5xl font-bold mb-14"
+        >
           Qualification
         </Typography>
 
         {/* Tabs */}
         <div className="flex justify-center gap-10 mb-20">
-          {["education", "experience"].map((key) => (
+          {["experience", "education"].map((key) => (
             <button
               key={key}
-              onClick={() => setTab(key as "education" | "experience")}
+              onClick={() => setTab(key as "experience" | "education")}
               className={`text-xl font-semibold border-b-2 pb-1 transition-all ${
                 tab === key
                   ? "text-black border-black"
@@ -66,20 +69,20 @@ export default function Qualifications() {
             key={tab}
             className="absolute left-1/2 top-0 w-1 bg-black transform -translate-x-1/2 rounded"
             initial={{ height: 0 }}
-            animate={{ height: `${data.length * 160}px` }} // Dynamic based on items
+            animate={{ height: `${data.length * 160}px` }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
           />
 
-          {/* Left Side (Education) */}
+          {/* Left Side: Experience */}
           <div className="flex flex-col items-end pr-4 md:pr-10">
             <AnimatePresence mode="wait">
-              {tab === "education" &&
-                educationData.map((item, idx) => (
+              {tab === "experience" &&
+                experienceData.map((item, idx) => (
                   <motion.div
                     key={item.title}
-                    initial={{ opacity: 0, x: -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -40 }}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
                     className="mb-16 relative w-full max-w-lg text-right"
                   >
@@ -92,16 +95,16 @@ export default function Qualifications() {
             </AnimatePresence>
           </div>
 
-          {/* Right Side (Experience) */}
+          {/* Right Side: Education */}
           <div className="flex flex-col items-start pl-4 md:pl-10">
             <AnimatePresence mode="wait">
-              {tab === "experience" &&
-                experienceData.map((item, idx) => (
+              {tab === "education" &&
+                educationData.map((item, idx) => (
                   <motion.div
                     key={item.title}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 40 }}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
                     className="mb-16 relative w-full max-w-lg"
                   >

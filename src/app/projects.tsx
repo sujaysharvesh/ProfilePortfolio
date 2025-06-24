@@ -10,17 +10,17 @@ const PROJECTS = [
   {
     title: "DocFlow",
     tech: "Java, Spring Boot, WebSocket, Redis Pub/Sub, RabbitMQ, OAuth2, Docker, EC2",
-    desc: "A microservices-based real-time collaborative document editor using Yjs and Tiptap. Features WebSocket-based communication for simultaneous multi-user editing and Redis Pub/Sub to manage live document sessions across distributed services. Backend services are containerized with Docker, routed via Nginx and Spring Cloud Gateway, and deployed on AWS EC2.",
-    image: "/image/VibeStream.png",
-    github: "#",
-    live: "#"
+    desc: "Currenlty working on a microservices-based real-time collaborative document editor using Yjs and Tiptap. Features WebSocket-based communication for simultaneous multi-user editing and Redis Pub/Sub to manage live document sessions across distributed services. Backend services are containerized with Docker, routed via Nginx and Spring Cloud Gateway, and deployed on AWS EC2.",
+    image: "/image/collab.png",
+    github: "https://github.com/sujaysharvesh/CollaborationService",
+    live: null
   },
   {
     title: "VibeStream",
     tech: "Java, Spring Boot, WebClient, PostgreSQL, Redis, OAuth2, Docker, S3, EC2",
     desc: "A microservices-based music streaming platform that lets users create and manage their own playlists on the cloud. Secured with OAuth 2.0 and JWT-based authentication, using PostgreSQL for structured metadata and AWS S3 for audio files. Features Redis as distributed token store for OAuth 2.0 with containerized deployment on AWS EC2.",
     image: "/image/VibeStream.png",
-    github: "#",
+    github: "https://github.com/sujaysharvesh/MusicService",
     live: "https://music-client-ten.vercel.app/"
   },
   {
@@ -28,7 +28,7 @@ const PROJECTS = [
     tech: "Java, Spring Boot, PostgreSQL, AWS S3, SVM",
     desc: "A high-performance drug file management system with integrated SVM model (Python/scikit-learn) to auto-classify drug types from uploaded files. Features AES-256 encryption for sensitive files before storing in AWS S3, while storing metadata in PostgreSQL. The trained SVM model classifies drugs with high accuracy, significantly reducing manual labeling efforts.",
     image: "/image/filemanagement.png",
-    github: "#",
+    github: "",
     live: null
   }
 ];
@@ -65,13 +65,6 @@ function ProjectCard({ title, tech, desc, image, github, live }) {
     
     <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 w-full max-w-9xl h-auto">
   {/* Image Section */}
-  <div className="md:w-120 w-full h-20 md:h-auto">
-    <img 
-      src={image} 
-      alt={title}
-      className="object-cover w-full h-full"
-    />
-  </div>
 
   {/* Content Section */}
   <div className="p-10 flex flex-col justify-between">

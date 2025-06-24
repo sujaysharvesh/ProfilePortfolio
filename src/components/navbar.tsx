@@ -22,9 +22,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_MENU = [
   { name: "Home", icon: HomeIcon, href: "#home" },
-  { name: "Project", icon: BriefcaseIcon, href: "#project" },
-  { name: "Experience", icon: AcademicCapIcon, href: "#experience" },
   { name: "Skills", icon: WrenchScrewdriverIcon, href: "#skills" },
+  { name: "Experience", icon: AcademicCapIcon, href: "#experience" },
+  { name: "Project", icon: BriefcaseIcon, href: "#project" },
 ];
 
 
@@ -165,7 +165,7 @@ export function Navbar() {
                   color="blue-gray"
                   className="font-sora text-xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
                 >
-                  SujaySharvesh
+                {"<SujaySharvesh />"}
                 </Typography>
               </motion.div>
             </motion.div>
@@ -206,7 +206,7 @@ export function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button className="font-sora bg-gray-900 hover:bg-black text-white font-medium px-6 py-2.5 rounded-xl">
+                  <Button className="font-sora hover:text-black bg-gray-900 hover:bg-white text-white font-medium px-6 py-2.5 rounded-xl">
                     Connect
                   </Button>
                 </a>
