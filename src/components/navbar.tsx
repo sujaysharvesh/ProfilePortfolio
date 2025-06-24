@@ -3,7 +3,6 @@
 import React from "react";
 import {
   Navbar as MTNavbar,
-  Collapse,
   Button,
   IconButton,
   Typography,
@@ -18,7 +17,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { button } from "@material-tailwind/react";
+
 
 const NAV_MENU = [
   { name: "Home", icon: HomeIcon, href: "#home" },
@@ -152,7 +151,7 @@ export function Navbar() {
         transition={{ duration: 0.3 }}
         className="rounded-2xl border border-white/20"
       >
-        <MTNavbar shadow={false} fullWidth className="bg-transparent border-0 px-6 py-3">
+        <MTNavbar className="bg-transparent border-0 px-6 py-3 w-full shadow-none">
           <div className="container mx-auto flex items-center justify-between">
             {/* Logo */}
             <motion.div variants={logoVariants}>

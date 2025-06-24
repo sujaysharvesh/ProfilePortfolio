@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import { Layout, FixedPlugin } from "@/components";
+import "@material-tailwind/react/tailwind.css";
 
 const sora = Sora({
   subsets: ["latin"],
