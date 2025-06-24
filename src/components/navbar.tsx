@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Navbar as MTNavbar,
@@ -7,18 +9,15 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import {
-  RectangleStackIcon,
-  UserCircleIcon,
-  CommandLineIcon,
   HomeIcon,
   BriefcaseIcon,
   AcademicCapIcon,
   WrenchScrewdriverIcon,
   Bars3Icon,
-  WrenchIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
+import { button } from "@material-tailwind/react";
 
 const NAV_MENU = [
   { name: "Home", icon: HomeIcon, href: "#home" },
@@ -26,7 +25,6 @@ const NAV_MENU = [
   { name: "Experience", icon: AcademicCapIcon, href: "#experience" },
   { name: "Project", icon: BriefcaseIcon, href: "#project" },
 ];
-
 
 const navbarVariants = {
   hidden: { opacity: 0, y: -20, scale: 0.95 },
@@ -103,21 +101,20 @@ interface NavItemProps {
   onClick?: () => void;
 }
 
-function NavItem({ children, href, onClick }: NavItemProps) {
+function NavItem({ children, href = "#", onClick }: NavItemProps) {
   return (
     <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="cursor-hover">
-      <motion.div whileHover={{ backgroundColor: "rgba(0,0,0,0.05)", borderRadius: "12px" }} className="p-2 -m-2">
-        <Typography
-          as="a"
-          href={href || "#"}
-          target={href ? "_blank" : "_self"}
-          variant="paragraph"
-          color="gray"
-          className="flex items-center gap-2 font-medium text-gray-900"
+      <motion.div
+        whileHover={{ backgroundColor: "rgba(0,0,0,0.05)", borderRadius: "12px" }}
+        className="p-2 -m-2"
+      >
+        <a
+          href={href}
           onClick={onClick}
+          className="flex items-center gap-2 font-medium text-gray-900"
         >
           {children}
-        </Typography>
+        </a>
       </motion.div>
     </motion.li>
   );
@@ -126,8 +123,6 @@ function NavItem({ children, href, onClick }: NavItemProps) {
 export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
-
-  const handleOpen = () => setOpen((cur) => !cur);
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -160,12 +155,12 @@ export function Navbar() {
           <div className="container mx-auto flex items-center justify-between">
             {/* Logo */}
             <motion.div variants={logoVariants}>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="cursor-hover">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Typography
                   color="blue-gray"
                   className="font-sora text-xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
                 >
-                {"<SujaySharvesh />"}
+                  {"<SujaySharvesh />"}
                 </Typography>
               </motion.div>
             </motion.div>
@@ -174,13 +169,15 @@ export function Navbar() {
             <motion.ul className="font-sora ml-10 hidden items-center gap-8 lg:flex" variants={navbarVariants}>
               {NAV_MENU.map(({ name, icon: Icon, href }) => (
                 <motion.div key={name} variants={menuItemVariants}>
-                  <a key={name} href={href} className="flex items-center gap-2 px-4 py-2 hover:text-blue-600"></a>
                   <NavItem href={href}>
-                    <motion.div whileHover={{ rotate: 5, scale: 1.1 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
-                      <Icon className="font-sora h-4 w-4 text-gray-600" />
+                    <motion.div
+                      whileHover={{ rotate: 5, scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      <Icon className="h-4 w-4 text-gray-600" />
                     </motion.div>
                     <motion.span
-                      className="font-sora text-gray-700 hover:text-black transition-colors duration-200"
+                      className="text-gray-700 hover:text-black transition-colors duration-200"
                       whileHover={{ x: 2 }}
                       transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     >
@@ -199,14 +196,13 @@ export function Navbar() {
                   boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="cursor-hover"
               >
                 <a
                   href="https://www.linkedin.com/in/sujay-sharvesh-47737b2b1/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button className="font-sora hover:text-black bg-gray-900 hover:bg-white text-white font-medium px-6 py-2.5 rounded-xl">
+                  <Button className="bg-gray-900 hover:bg-white text-white hover:text-black font-medium px-6 py-2.5 rounded-xl">
                     Connect
                   </Button>
                 </a>
@@ -214,8 +210,8 @@ export function Navbar() {
             </motion.div>
 
             {/* Mobile Menu Icon */}
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="ml-auto inline-block lg:hidden cursor-hover">
-              <IconButton variant="text" color="gray" onClick={handleOpen}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="ml-auto inline-block lg:hidden">
+              <IconButton variant="text" color="gray" onClick={() => setOpen((cur) => !cur)}>
                 <AnimatePresence mode="wait">
                   {open ? (
                     <motion.div
@@ -258,12 +254,7 @@ export function Navbar() {
                     {NAV_MENU.map(({ name, icon: Icon, href }) => (
                       <motion.div key={name} variants={mobileItemVariants}>
                         <NavItem href={href} onClick={() => setOpen(false)}>
-                          <motion.div
-                            whileHover={{ rotate: 5, scale: 1.1 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                          >
-                            <Icon className="h-5 w-5 text-gray-600" />
-                          </motion.div>
+                          <Icon className="h-5 w-5 text-gray-600" />
                           <span className="text-gray-700">{name}</span>
                         </NavItem>
                       </motion.div>
@@ -272,7 +263,7 @@ export function Navbar() {
 
                   {/* Mobile Connect Button */}
                   <motion.div className="mt-6 mb-4 flex items-center gap-3" variants={mobileItemVariants}>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="cursor-hover">
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                       <a
                         href="https://www.linkedin.com/in/sujay-sharvesh-47737b2b1/"
                         target="_blank"

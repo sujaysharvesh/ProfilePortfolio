@@ -4,13 +4,21 @@
 import { EyeIcon, CodeBracketIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 
+// ✅ TypeScript type for project props
+type ProjectProps = {
+  title: string;
+  tech: string;
+  desc: string;
+  image: string;
+  github: string;
+  live: string | null;
+};
 
-
-const PROJECTS = [
+const PROJECTS: ProjectProps[] = [
   {
     title: "DocFlow",
     tech: "Java, Spring Boot, WebSocket, Redis Pub/Sub, RabbitMQ, OAuth2, Docker, EC2",
-    desc: "Currenlty working on a microservices-based real-time collaborative document editor using Yjs and Tiptap. Features WebSocket-based communication for simultaneous multi-user editing and Redis Pub/Sub to manage live document sessions across distributed services. Backend services are containerized with Docker, routed via Nginx and Spring Cloud Gateway, and deployed on AWS EC2.",
+    desc: "Currently working on a microservices-based real-time collaborative document editor using Yjs and Tiptap. Features WebSocket-based communication for simultaneous multi-user editing and Redis Pub/Sub to manage live document sessions across distributed services. Backend services are containerized with Docker, routed via Nginx and Spring Cloud Gateway, and deployed on AWS EC2.",
     image: "/image/collab.png",
     github: "https://github.com/sujaysharvesh/CollaborationService",
     live: null
@@ -33,80 +41,62 @@ const PROJECTS = [
   }
 ];
 
-<motion.div
-  className="flex flex-col gap-8 max-w-11xl mx-auto"
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.2 }}
-  variants={{
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: 0.15 }
-    }
-  }}
->
-  {PROJECTS.map((props, idx) => (
-    <motion.div
-      key={idx}
-      variants={{
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0 }
-      }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-    >
-      <ProjectCard {...props} />
-    </motion.div>
-  ))}
-</motion.div>
-
-
-function ProjectCard({ title, tech, desc, image, github, live }) {
+// ✅ Component to render individual project cards
+function ProjectCard({ title, tech, desc, image, github, live }: ProjectProps) {
   return (
-    
     <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 w-full max-w-9xl h-auto">
-  {/* Image Section */}
+      {/* Image Section */}
+      <div className="md:w-1/2 w-full h-60 md:h-auto">
+        <img src={image} alt={title} className="object-cover w-full h-full" />
+      </div>
 
-  {/* Content Section */}
-  <div className="p-10 flex flex-col justify-between">
-    <h3 className="text-3xl font-bold text-black mb-3">{title}</h3>
+      {/* Content Section */}
+      <div className="p-10 flex flex-col justify-between md:w-1/2">
+        <h3 className="text-3xl font-bold text-black mb-3">{title}</h3>
 
-    <div className="flex flex-wrap gap-2 mb-4">
-      {tech.split(', ').map((item, techIndex) => (
-        <span
-          key={techIndex}
-          className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-clip font-medium"
-        >
-          {item}
-        </span>
-      ))}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {tech.split(', ').map((item, techIndex) => (
+            <span
+              key={techIndex}
+              className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-clip font-medium"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+
+        <p className="text-gray-600 leading-relaxed mb-4 text-base">{desc}</p>
+
+        <div className="flex gap-3 flex-wrap">
+          {live && (
+            <a
+              href={live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+            >
+              <EyeIcon className="h-4 w-4" />
+              Live Demo
+            </a>
+          )}
+          {github && (
+            <a
+              href={github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:border-black hover:text-black transition-colors text-sm font-medium"
+            >
+              <CodeBracketIcon className="h-4 w-4" />
+              GitHub
+            </a>
+          )}
+        </div>
+      </div>
     </div>
-
-    <p className="text-gray-600 leading-relaxed mb-4 text-wrap text-base">{desc}</p>
-
-    <div className="flex gap-3 flex-wrap">
-      {live && (
-        <a 
-          href={live}
-          className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
-        >
-          <EyeIcon className="h-4 w-4" />
-          Live Demo
-        </a>
-      )}
-      <a 
-        href={github}
-        className="flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:border-black hover:text-black transition-colors text-sm font-medium"
-      >
-        <CodeBracketIcon className="h-4 w-4" />
-        GitHub
-      </a>
-    </div>
-  </div>
-</div>
-
   );
 }
 
+// ✅ Projects Section
 export function Projects() {
   return (
     <section className="min-h-screen bg-gray-50 flex items-center py-20 px-8">
@@ -121,12 +111,33 @@ export function Projects() {
             aspects of scalable system design and implementation.
           </p>
         </div>
-        
-        <div className="flex flex-col gap-8 max-w-11xl mx-auto">
+
+        {/* Animated Project Cards */}
+        <motion.div
+          className="flex flex-col gap-8 max-w-11xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: { staggerChildren: 0.15 }
+            }
+          }}
+        >
           {PROJECTS.map((props, idx) => (
-            <ProjectCard key={idx} {...props} />
+            <motion.div
+              key={idx}
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <ProjectCard {...props} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
