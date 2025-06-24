@@ -9,6 +9,14 @@ import {
   EyeIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/solid";
+import { ReactNode } from "react";
+
+interface SkillCardProps {
+  icon: React.ElementType;
+  title: string;
+  children: ReactNode;
+  index: number;
+}
 
 const SKILLS = [
   {
@@ -97,7 +105,7 @@ const textVariants = {
   },
 };
 
-function SkillCard({ icon: Icon, title, children, index }) {
+function SkillCard({ icon: Icon, title, children, index }: SkillCardProps) {
   return (
     <motion.div
       variants={cardVariants}

@@ -16,6 +16,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { button } from "@material-tailwind/react";
 
