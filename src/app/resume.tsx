@@ -27,7 +27,7 @@ const experienceData = [
   {
     title: "Backend Developer",
     institution: "Contract",
-    date: "Jun 2025 - Feb 2025",
+    date: "Jan 2025 - Feb 2025",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function Qualifications() {
       <div className="font-sora max-w-6xl mx-auto">
         <Typography
           variant="h2"
-          className="text-center text-4xl md:text-5xl font-bold mb-14"
+          className="text-center text-4xl md:text-5xl font-sora mb-14"
         >
           Qualification
         </Typography>
