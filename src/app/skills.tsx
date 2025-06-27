@@ -9,7 +9,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { useMediaQuery } from "@react-hook/media-query";
 
-
 interface Skill {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
@@ -48,14 +47,15 @@ const cardVariants = {
     y: 0,
     transition: {
       delay: i * 0.15,
-      type: "spring",
+      type: "spring" as const,
       stiffness: 100,
       damping: 15,
     },
   }),
   hover: {
     y: -8,
-    transition: { type: "spring", stiffness: 400, damping: 15 },
+    transition: { type: "spring" as const
+      , stiffness: 400, damping: 15 },
   },
 };
 
@@ -64,7 +64,7 @@ const iconVariants = {
   visible: {
     scale: 1,
     opacity: 1,
-    transition: { type: "spring", stiffness: 200 },
+    transition: { type: "spring" as const, stiffness: 200 },
   },
   hover: { rotate: 15, scale: 1.1 },
 };
@@ -94,6 +94,7 @@ export default function Skills() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SKILLS.map((skill, i) => (
             <motion.article
+              key={skill.title}
               custom={i}
               initial="hidden"
               whileInView="visible"
