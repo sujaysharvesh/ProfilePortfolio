@@ -62,19 +62,40 @@ export default function Qualifications() {
           ))}
         </div>
 
-        {/* Timeline */}
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Timeline - Mobile (single column) */}
+        <div className="md:hidden">
+          <AnimatePresence mode="wait">
+            {data.map((item, idx) => (
+              <motion.div
+                key={`${tab}-${idx}`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="mb-16 relative w-full pl-8"
+              >
+                <div className="absolute left-0 top-2 w-5 h-5 bg-black rounded-full border-4 border-white shadow-md z-10" />
+                <h3 className="text-2xl font-bold text-black">{item.title}</h3>
+                <p className="text-gray-800 font-medium text-lg">{item.institution}</p>
+                <p className="text-sm text-gray-500">{item.date}</p>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Timeline - Desktop (split columns) */}
+        <div className="hidden md:relative md:flex md:grid md:grid-cols-2 gap-12">
           {/* Vertical Line */}
           <motion.div
             key={tab}
-            className="absolute left-1/2 top-0 w-1 bg-black transform -translate-x-1/2 rounded"
+            className="hidden md:block absolute left-1/2 top-0 w-1 bg-black transform -translate-x-1/2 rounded"
             initial={{ height: 0 }}
             animate={{ height: `${data.length * 160}px` }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
           />
 
           {/* Left Side: Experience */}
-          <div className="flex flex-col items-end pr-4 md:pr-10">
+          <div className="flex flex-col items-start md:items-end pr-4 md:pr-10">
             <AnimatePresence mode="wait">
               {tab === "experience" &&
                 experienceData.map((item, idx) => (

@@ -1,233 +1,138 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
-  RectangleGroupIcon,
-  FingerPrintIcon,
-  SwatchIcon,
-  HashtagIcon,
   EyeIcon,
-  DocumentTextIcon,
+  ServerIcon,
+  ShieldCheckIcon,
 } from "@heroicons/react/24/solid";
-import { ReactNode } from "react";
+import { useMediaQuery } from "@react-hook/media-query";
 
-interface SkillCardProps {
-  icon: React.ElementType;
+
+interface Skill {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
-  children: ReactNode;
-  index: number;
+  description: string;
+  highlights: string[];
 }
 
-const SKILLS = [
+const SKILLS: Skill[] = [
   {
-    icon: HashtagIcon,
-    title: "Web Optimization",
-    children:
-      "Performance matters. I optimize websites and apps for speed, ensuring your users enjoy a fast and responsive experience, which in turn boosts user satisfaction and SEO rankings.",
+    icon: ServerIcon,
+    title: "Backend Architecture",
+    description:
+      "Designing scalable microservices and backend systems with clean API layers and secure communication.",
+    highlights: ["Spring Boot", "FastAPI", "RabbitMQ"],
   },
   {
     icon: EyeIcon,
-    title: "Backend Development",
-    children:
-      "I design and build scalable backend systems with a strong focus on reliability, maintainability, and performance. My work ensures that every feature is powered by a solid and secure infrastructure.",
+    title: "API Development",
+    description:
+      "Building RESTful and WebSocket APIs with OAuth2 security. Reduced latency by 35% through optimized database queries and connection pooling.",
+    highlights: ["REST", "WebSocket"],
   },
   {
-    icon: DocumentTextIcon,
-    title: "Testing and Quality Assurance",
-    children:
-      "I rigorously test and debug applications to guarantee a bug-free and secure environment for users. Your peace of mind is as important to me as the functionality of your project.",
+    icon: ShieldCheckIcon,
+    title: "DevOps & Security",
+    description:
+      "Implementing CI/CD pipelines with 99.9% uptime. Secured systems with JWT validation and rate limiting, blocking 100% of injection attempts.",
+    highlights: ["AWS", "Docker", "GitHub Actions"],
   },
 ];
 
-// Container animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-// Card animation variants
 const cardVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 60,
-    scale: 0.8,
-  },
-  visible: {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
-      type: "spring" as const,
-      stiffness: 300,
-      damping: 24,
-      duration: 0.6,
+      delay: i * 0.15,
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
     },
+  }),
+  hover: {
+    y: -8,
+    transition: { type: "spring", stiffness: 400, damping: 15 },
   },
 };
 
-// Icon animation variants
 const iconVariants = {
-  hidden: { 
-    scale: 0,
-    rotate: -180,
-  },
+  hidden: { scale: 0.5, opacity: 0 },
   visible: {
     scale: 1,
-    rotate: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 400,
-      damping: 20,
-      delay: 0.2,
-    },
-  },
-};
-
-// Text animation variants
-const textVariants = {
-  hidden: { 
-    opacity: 0,
-    y: 20,
-  },
-  visible: {
     opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      delay: 0.3,
-    },
+    transition: { type: "spring", stiffness: 200 },
   },
+  hover: { rotate: 15, scale: 1.1 },
 };
 
-function SkillCard({ icon: Icon, title, children, index }: SkillCardProps) {
-  return (
-    <motion.div
-      variants={cardVariants}
-      whileHover={{ 
-        scale: 1.05,
-        y: -10,
-        transition: { 
-          type: "spring" as const,
-          stiffness: 400, 
-          damping: 25 
-        }
-      }}
-      className="bg-white rounded-lg shadow-lg p-8 border border-gray-100 cursor-hover relative overflow-hidden group"
-    >
-      {/* Gradient background effect on hover */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        whileHover={{ opacity: 0.05, scale: 1 }}
-        transition={{ duration: 0.3 }}
-        className="absolute inset-0 bg-gradient-to-br from-black to-gray-800 rounded-lg"
-      />
-      
-      <div className="relative z-10">
-        <div className="mb-6">
-          <motion.div
-            variants={iconVariants}
-            whileHover={{
-              rotate: 360,
-              scale: 1.1,
-              transition: { duration: 0.6 }
-            }}
-            className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mb-4 relative overflow-hidden"
-          >
-            {/* Icon background glow effect */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 0.3 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-white rounded-lg"
-            />
-            <Icon className="h-6 w-6 text-white relative z-10" />
-          </motion.div>
-          
-          <motion.h3
-            variants={textVariants}
-            className="text-xl font-bold text-black mb-3 group-hover:text-gray-800 transition-colors duration-300"
-          >
-            {title}
-          </motion.h3>
-        </div>
-        
-        <motion.p
-          variants={textVariants}
-          className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300"
-        >
-          {children}
-        </motion.p>
-      </div>
-    </motion.div>
-  );
-}
+export default function Skills() {
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
-export function Skills() {
   return (
-    <section className="min-h-screen bg-gray-50 flex items-center py-20 px-8">
-      <div className="container mx-auto">
-        {/* Header with scroll animations */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
+    <section className="py-24 px-6 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <motion.header
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
           className="text-center mb-16"
         >
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-black font-bold text-sm uppercase tracking-wider mb-4"
-          >
-            My Skills
-          </motion.p>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="text-4xl lg:text-5xl font-bold text-black mb-6"
-          >
-            What I Do
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="text-gray-600 text-lg lg:text-xl max-w-4xl mx-auto leading-relaxed"
-          >
-            Things I do include building structured, scalable, and reliable backend systems. 
-            I focus on crafting efficient APIs, managing databases, and enabling seamless communication 
-            between services — all to bring powerful ideas to life.
-          </motion.p>
-        </motion.div>
-        
-        {/* Skills grid with staggered animations */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
-        >
-          {SKILLS.map((props, idx) => (
-            <SkillCard key={idx} {...props} index={idx} />
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Technical Expertise
+          </h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Specialized backend development with measurable results
+          </p>
+        </motion.header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {SKILLS.map((skill, i) => (
+            <motion.article
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              whileHover={
+                !isMobile && !prefersReducedMotion ? "hover" : undefined
+              }
+              viewport={{ once: true, margin: "-50px" }}
+              variants={!prefersReducedMotion ? cardVariants : undefined}
+              className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+            >
+              <motion.div
+                variants={!prefersReducedMotion ? iconVariants : undefined}
+                className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mb-6"
+              >
+                <skill.icon className="h-6 w-6 text-white" />
+              </motion.div>
+
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {skill.title}
+              </h3>
+
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                {skill.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mt-4">
+                {skill.highlights.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 text-sm bg-gray-100 text-gray-800 rounded-full"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.article>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
-
-export default Skills;

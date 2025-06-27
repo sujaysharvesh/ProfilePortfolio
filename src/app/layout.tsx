@@ -12,9 +12,9 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js + Tailwind Portfolio Page",
+  title: "👋 Hi, I’m Sujay Sharvesh ",
   description:
-    "Introducing Tailwind Portfolio Page, a versatile and stylish portfolio template built on the foundation of Tailwind CSS and Material Tailwind.",
+    "Full-stack developer with hands-on experience building scalable backend services and modern web applications.",
 };
 
 export default function RootLayout({
